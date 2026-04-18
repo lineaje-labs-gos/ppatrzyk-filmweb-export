@@ -1,21 +1,13 @@
 [project]
 name = "filmweb"
-version = "0.8.0+lineaje.1"
+version = "0.8"
 description = "Export movie ratings from filmweb.pl"
-authors = [
-    { name = "Piotr Patrzyk" },
-]
+authors = [ {name = "Piotr Patrzyk"}, ]
+license = {text = "MIT"}
 readme = "README.md"
 requires-python = ">=3.10"
-dynamic = [
-    "dependencies",
-]
-keywords = [
-    "filmweb",
-    "movie",
-    "crawler",
-    "data",
-]
+dynamic = ["dependencies", ]
+keywords = ["filmweb", "movie", "crawler", "data"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "License :: OSI Approved :: MIT License",
@@ -23,34 +15,19 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Topic :: Internet",
 ]
-maintainers = [
-    { name = "Lineaje DepFixer", email = "221268890+Lineaje-DepFixer@users.noreply.github.com" },
-]
-
-[project.license]
-text = "MIT"
 
 [project.urls]
 Source = "https://github.com/ppatrzyk/filmweb-export"
-Homepage = "https://github.com/lineaje-labs-gos/ppatrzyk-filmweb-export"
-Repository = "https://github.com/lineaje-labs-gos/ppatrzyk-filmweb-export"
-Tracker = "https://github.com/lineaje-labs-gos/ppatrzyk-filmweb-export/issues"
 
 [project.scripts]
 filmweb = "filmweb.main:main"
 
 [build-system]
-requires = [
-    "setuptools",
-]
+requires = ["setuptools", ]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
-include = [
-    "filmweb",
-]
+include = ["filmweb"]
 
-[tool.setuptools.dynamic.dependencies]
-file = [
-    "requirements.txt",
-]
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
