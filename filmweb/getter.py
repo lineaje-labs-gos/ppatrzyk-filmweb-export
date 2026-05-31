@@ -21,17 +21,17 @@ HEADERS = {
     "TE": "trailers",
 }
 
-def get_films_page(args):
+def get_titles_page(args):
     """
-    request films page
+    request title page
     """
     # this workaround is necessary because multiprocessing imap takes one arg only
-    (cookie, user, friend_query, n) = args
+    (cookie, user, friend_query, title_type, n) = args
     if friend_query:
-        url = f"https://www.filmweb.pl/api/v1/logged/friend/{user}/vote/title/film?page={n}"
+        url = f"https://www.filmweb.pl/api/v1/logged/friend/{user}/vote/title/{title_type}?page={n}"
     else:
-        url = f"https://www.filmweb.pl/api/v1/logged/vote/title/film?page={n}"
-    data = _get_json(url, cookie, "get_films_page")
+        url = f"https://www.filmweb.pl/api/v1/logged/vote/title/{title_type}?page={n}"
+    data = _get_json(url, cookie, "get_titles_page")
     return json.dumps(data)
 
 def auth_check(cookie):
@@ -43,31 +43,32 @@ def auth_check(cookie):
     user = content["name"]
     return user
 
-def get_votes_count(user):
+def get_votes_count(user, title_type):
     """
-    Get total count of voteshttps://www.filmweb.pl/api/v1/user/{user}/votes/film/count
-    Args:
+    Get total count of user votes for one title type: https://www.filmweb.pl/api/v1/user/{user}/votes/{title_type}/count
+        Args:
         user: user to get ratings for
+        title_type: type of title to fetch
     """
-    url = f"https://www.filmweb.pl/api/v1/user/{user}/votes/film/count"
+    url = f"https://www.filmweb.pl/api/v1/user/{user}/votes/{title_type}/count"
     return _get_json(url, "", "get_votes_count")
 
-def get_global_info(movie_id):
+def get_global_info(title_id):
     """
-    Get info about a movie (title etc)
+    Get info about a title (title etc)
     """
-    url = f"https://www.filmweb.pl/api/v1/title/{movie_id}/info"
+    url = f"https://www.filmweb.pl/api/v1/title/{title_id}/info"
     data = _get_json(url, "", "get_global_info")
-    data["entity"] = movie_id
+    data["entity"] = title_id
     return json.dumps(data)
 
-def get_global_rating(movie_id):
+def get_global_rating(title_id):
     """
-    Get global rating for a movie
+    Get global rating for a title
     """
-    url = f"https://www.filmweb.pl/api/v1/film/{movie_id}/rating"
+    url = f"https://www.filmweb.pl/api/v1/film/{title_id}/rating"
     data = _get_json(url, "", "get_global_rating")
-    data["entity"] = movie_id
+    data["entity"] = title_id
     data["global_rate"] = data.pop("rate")
     return json.dumps(data)
 
