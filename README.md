@@ -42,17 +42,21 @@ filmweb <username> <cookie>
 ```
 $ filmweb -f csv -f json pieca "didomi_token=(...)=="
 INFO:root:Checking args...
-INFO:root:Fetching list of movies [1/4]...
-100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:00<00:00, 13.94it/s]
-INFO:root:User pieca has 939 movies...
-INFO:root:Fetching info about movies [2/4]...
-100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 939/939 [00:37<00:00, 25.19it/s]
-INFO:root:Fetching global rating for movies [3/4]...
-100%|██████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 939/939 [00:39<00:00, 23.70it/s]
+INFO:root:Fetching list of rated titles [1/4]...
+INFO:root:Fetching list of movie ratings...
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 10/10 [00:00<00:00, 43.70it/s]
+INFO:root:Fetching list of tv_show ratings...
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 10.30it/s]
+INFO:root:Skipping game, no ratings found
+INFO:root:User pieca has 955 rated titles...
+INFO:root:Fetching info about titles [2/4]...
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 955/955 [01:02<00:00, 15.21it/s]
+INFO:root:Fetching global rating for titles [3/4]...
+100%|███████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 955/955 [01:15<00:00, 12.72it/s]
 INFO:root:Writing data [4/4]...
-INFO:root:pieca_20231207.json written!
-INFO:root:pieca_20231207.csv written!
-$ cat pieca_20231207.json | jq .[0]
+INFO:root:pieca_20260604.json written!
+INFO:root:pieca_20260604.csv written!
+$ cat pieca_20260604.json | jq .[0]
 {
   "timestamp": 1579354599456,
   "favorite": null,
@@ -63,14 +67,20 @@ $ cat pieca_20231207.json | jq .[0]
   "pl_title": "Wejście smoka!",
   "year": 2016,
   "movie_id": "757318",
+  "title_type": "movie",
+  "title_sub_type": "film_cinema",
   "url": "https://www.filmweb.pl/film/Wej%C5%9Bcie+smoka%21-2016-757318",
   "date": "2020-01-18"
 }
-$ cat pieca_20231207.csv | xsv sample 3 | xsv table
-timestamp      favorite  user_rating  global_rating  global_rating_count  original_title           pl_title                    year  movie_id  url                                                                      date
-1445174195445            4            7.12156        4212                 Bella                    Bella                       2006  294905    https://www.filmweb.pl/film/Bella-2006-294905                            2015-10-18
-1425511762032            4            6.36319        42906                Veronika Decides to Die  Weronika postanawia umrzeć  2009  459178    https://www.filmweb.pl/film/Weronika+postanawia+umrze%C4%87-2009-459178  2015-03-05
-1638617602312            3            8.62545        995071               The Green Mile           Zielona mila                1999  862       https://www.filmweb.pl/film/Zielona+mila-1999-862      
+$ duckdb -box -c "SELECT * FROM read_csv_auto('pieca_20260604.csv') ORDER BY RANDOM() LIMIT 3;"
+┌───────────────┬──────────┬─────────────┬───────────────┬─────────────────────┬─────────────────┬─────────────────┬──────┬──────────┬────────────┬────────────────┬────────────────────────────────────────────────────────────────────┬────────────┐
+│   timestamp   │ favorite │ user_rating │ global_rating │ global_rating_count │ original_title  │    pl_title     │ year │ movie_id │ title_type │ title_sub_type │                                url                                 │    date    │
+├───────────────┼──────────┼─────────────┼───────────────┼─────────────────────┼─────────────────┼─────────────────┼──────┼──────────┼────────────┼────────────────┼────────────────────────────────────────────────────────────────────┼────────────┤
+│ 1552236606975 │ NULL     │ 7           │ 6.60002       │ 25576               │ Force Majeure   │ Turysta         │ 2014 │ 709434   │ movie      │ film_cinema    │ https://www.filmweb.pl/film/Turysta-2014-709434                    │ 2019-03-10 │
+│ 1638616857444 │ NULL     │ 5           │ 7.27418       │ 60056               │ Pogoda na jutro │ Pogoda na jutro │ 2003 │ 39495    │ movie      │ film_cinema    │ https://www.filmweb.pl/film/Pogoda+na+jutro-2003-39495             │ 2021-12-04 │
+│ 1638614791800 │ NULL     │ 6           │ 7.69933       │ 51552               │ Żółty szalik    │ Żółty szalik    │ 2000 │ 32453    │ movie      │ film_tv        │ https://www.filmweb.pl/film/%C5%BB%C3%B3%C5%82ty+szalik-2000-32453 │ 2021-12-04 │
+└───────────────┴──────────┴─────────────┴───────────────┴─────────────────────┴─────────────────┴─────────────────┴──────┴──────────┴────────────┴────────────────┴────────────────────────────────────────────────────────────────────┴────────────┘
+
 ```
 
 ### Wszystkie opcje

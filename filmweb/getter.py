@@ -3,8 +3,7 @@ import requests
 
 HEADERS = {
     # https://www.whatismybrowser.com/guides/the-latest-user-agent/firefox
-    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:144.0) Gecko/20100101 Firefox/144.0",
-    "x-locale": "pl_PL",
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 15.7; rv:151.0) Gecko/20100101 Firefox/151.0",
     "Host": "www.filmweb.pl",
     "Referer": "https://www.filmweb.pl",
     "Accept": "*/*",
@@ -14,8 +13,8 @@ HEADERS = {
     "DNT": "1",
     "Connection": "keep-alive",
     "Upgrade-Insecure-Requests": "1",
-    "Sec-Fetch-Dest": 'empty',
-    "Sec-Fetch-Mode": "cors",
+    "Sec-Fetch-Dest": 'document',
+    "Sec-Fetch-Mode": "navigate",
     "Sec-Fetch-Site": "same-origin",
     "Sec-GPC": "1",
     "TE": "trailers",
