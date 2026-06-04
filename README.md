@@ -1,6 +1,6 @@
 # filmweb-export
 
-Export ocen z serwisu [Filmweb](https://www.filmweb.pl).
+Eksport ocen filmów, seriali i gier z serwisu [Filmweb](https://www.filmweb.pl).
 
 ## Instalacja
 
@@ -80,11 +80,12 @@ $ filmweb -h
 filmweb
 
 Usage:
-    filmweb [--format=<fileformat>]... [--debug] <username> <cookie>
+    filmweb [--format=<fileformat>]... [--type=<titletype>]... [--debug] <username> <cookie>
 
 Options:
     -h --help                     Show this screen
     -f --format=<fileformat>      Output file format: json (default), csv, letterboxd
+    -t --type=<titletype>         Title type: movie, tv_show, game (all by default)
     -d --debug                    Debug prints
 ```
 
@@ -102,8 +103,6 @@ favorite | _dodany do ulubionych_
 original\_title | _tytuł oryginalny_
 pl\_title | _tytuł polski_
 movie\_id | _id filmu_ (filmweb)
+title\_type | _typ tytułu_ (movie, tv\_show, game)
+title\_sub\_type | _podtyp tytułu_ (np. serial\_tv, mini\_serial)
 url | _strona filmu_
-
-## Znane problemy:
-
-- Eksport tylko ocen filmów, inne (np. seriale) niedostępne,
